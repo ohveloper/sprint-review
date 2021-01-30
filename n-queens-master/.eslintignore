@@ -1,0 +1,10 @@
+.eslint*
+**/node_modules
+**/spec
+**/bower_components
+**/lib
+**/vendor
+**/*.min.js
+/src/BoardView.js
+/src
+test.mocha.js
