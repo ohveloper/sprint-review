@@ -181,11 +181,22 @@
     //
     // 주어진 열(colIndex)에 충돌하는 말이 있는지 확인합니다.
     hasColConflictAt: function (colIndex) {
+      const rows = this.get('n');
+      let count = 0;
+      for (let i = 0; i < rows; i++) {
+        let row = this.get(i);
+        count += row[colIndex]; // count += row(colIndex);
+        if (count > 1) return true;
+      }
       return false; // fixme
     },
 
     // 체스 판 위에 열 충돌이 하나라도 있는지 검사합니다.
     hasAnyColConflicts: function () {
+      const rows = this.get('n');
+      for (let i = 0; i < rows; i++) {
+        if (this.hasColConflictAt(i)) return true;
+      }
       return false; // fixme
     },
 
@@ -194,11 +205,30 @@
     //
     // 주어진 슬래시 대각선(/)에 충돌하는 말이 있는지 확인합니다.
     hasSlashConflictAt: function (SlashColumnIndexAtFirstRow) {
+      // 6, 0 / 5, 1 / 4, 2 / 3, 3 / 2, 4 / 1, 5 / 0, 6;
+      let count = 0;
+      for (let i = 0; i <= SlashColumnIndexAtFirstRow; i++) {
+        let idx = SlashColumnIndexAtFirstRow - i;
+        let row = this.get(i);
+        if (!!row && !!row[idx]) {
+          count += row[idx]; // row[i][idx]로 진행하려해서 안됨 이미 불러왔기때문에 idx만 넣어도됨
+        }
+        if (count > 1) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
     // 체스 판 위에 슬래시 대각선(/)에 충돌이 하나라도 있는지 검사합니다.
     hasAnySlashConflicts: function () {
+      let rows = this.get('n');
+      let idx = 2 * rows - 1;
+      for (let i = 0; i <= idx; i++) {
+        if (this.hasSlashConflictAt(i) === true) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
@@ -207,11 +237,32 @@
     //
     // 주어진 역 슬래시 대각선(\)에 충돌하는 말이 있는지 확인합니다.
     hasBackSlashConflictAt: function (BackSlashColumnIndexAtFirstRow) {
+      // 0 , -2 / 1, -1 / 2, 0 / 3 , 1 / 4, 2 / 5, 3 /
+      let count = 0;
+      const size = this.get('n');
+      let rength = 0;
+      for (let i = BackSlashColumnIndexAtFirstRow; i <= size; i++) {
+        let row = this.get(rength);
+        if (!!row && !!row[i]) {
+          count += row[i];
+        }
+        if (count > 1) {
+          return true;
+        }
+        rength++;
+      }
+
       return false; // fixme
     },
 
     // 체스 판 위에 역 슬래시 대각선(\) 충돌이 하나라도 있는지 검사합니다.
     hasAnyBackSlashConflicts: function () {
+      let size = this.get('n');
+      let startIdx = this.get('n') * -1 + 1;
+
+      for (let i = startIdx; i <= size; i++) {
+        if (this.hasBackSlashConflictAt(i)) return true;
+      }
       return false; // fixme
     },
 
