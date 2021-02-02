@@ -5,10 +5,11 @@ const { rejects } = require("assert");
 const getDataFromFilePromise = (filePath) => {
   return new Promise((resolve, rejects) => {
     fs.readFile(filePath, "utf8", (err, data) => {
+      //utf8 신경쓰자
       if (err) {
-        return rejects(err);
+        rejects(err);
       } else {
-        return resolve(data);
+        resolve(data);
       }
     });
   });
