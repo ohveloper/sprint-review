@@ -1,7 +1,6 @@
-var newsURL = "http://localhost:5000/data/latestNews";
-var weatherURL = "http://localhost:5000/data/weather";
-
 async function getNewsAndWeatherAsync() {
+  var newsURL = "http://localhost:5000/data/latestNews";
+  var weatherURL = "http://localhost:5000/data/weather";
   // TODO: async/await 키워드를 이용해 작성합니다
   const newsData = await fetch(newsURL).then((data) => data.json());
 
