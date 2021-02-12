@@ -5,20 +5,35 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tweets: [{}, {}],
+      tweets: [],
       value: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.renderTweets = this.renderTweets.bind(this);
+    // this.tweet = this.tweet.bind(this);
   }
 
-  hadleChange(event) {
-    this.setState({ value: event.target.value });
+  handleChange(event) {
+    return this.setState({ value: event.target.value });
   }
   handleClick() {
-    console.log(this.state.value);
+    let tweet = this.state.tweets.concat({
+      message: this.state.value,
+    });
+    this.setState({
+      tweets: tweet,
+      value: "",
+    });
+    // console.log(this.state.value);
+    // console.log(tweet);
+    console.log(this.state.tweets);
   }
-
+  renderTweets() {
+    this.state.tweets.map((tweet, idx) => {
+      return <Tweet key={idx} content={tweet.content}></Tweet>;
+    });
+  }
   render() {
     return (
       <div id="root">
@@ -26,9 +41,20 @@ class App extends React.Component {
           <textarea value={this.state.value} onChange={this.handleChange} />
           <button onClick={this.handleClick}>click</button>
         </div>
+        <div>{this.state.value}</div>
+        <ul>{this.renderTweets()}</ul>
       </div>
     );
   }
 }
 
+class Tweet extends React.Component {
+  render() {
+    return (
+      <li>
+        <div>{this.props.content}</div>
+      </li>
+    );
+  }
+}
 export default App;
