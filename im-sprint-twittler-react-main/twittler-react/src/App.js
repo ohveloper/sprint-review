@@ -12,7 +12,7 @@ class App extends React.Component {
     this.state = {
       tweets: [],
       message: "",
-      name: "",
+      // name: "",
     };
   }
 
@@ -39,7 +39,7 @@ class App extends React.Component {
       this.setState({
         tweets: newTweet,
         message: "",
-        name: "",
+        // name: "",
       });
       document.querySelector("#inputName").value = null;
     } else {
@@ -59,7 +59,7 @@ class App extends React.Component {
     return (
       <div id="App">
         <div id="userBox">
-          <input autoComplete="off" id="inputName" placeholder="이름을 입려하세요"></input>
+          <input autoComplete="off" id="inputName" placeholder="이름을 입력하세요"></input>
           <input id="inputText" autoComplete="off" value={this.state.message} onChange={this.handleChange} placeholder="내용을 입력하세요" />
 
           <button id="button" onClick={this.handleClick}>

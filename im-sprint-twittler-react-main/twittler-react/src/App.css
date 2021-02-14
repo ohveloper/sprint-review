@@ -33,10 +33,11 @@
 
 #tweetBox {
   /* display: flex; */
+
   margin: 20px;
   height: 80vh;
   box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  padding: 10px 15px;
+  padding: 15px 15px;
   background-color: #fff;
   border: none;
   border-radius: 10px;
