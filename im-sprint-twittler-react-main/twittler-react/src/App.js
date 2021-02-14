@@ -1,60 +1,64 @@
 import "./App.css";
 import React from "react";
+import Tweet from "./Tweet";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      tweets: [],
-      value: "",
-    };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.renderTweets = this.renderTweets.bind(this);
-    // this.tweet = this.tweet.bind(this);
+
+    this.state = {
+      tweets: [],
+      message: "",
+      name: "",
+    };
   }
 
   handleChange(event) {
-    return this.setState({ value: event.target.value });
+    return this.setState({ message: event.target.value });
   }
+
+  // }
   handleClick() {
-    let tweet = this.state.tweets.concat({
-      message: this.state.value,
+    let newTweet = this.state.tweets.concat({
+      // uuid: this.state.currentNum,
+      name: document.querySelector("#name").value || "김아무개",
+      content: this.state.message,
     });
-    this.setState({
-      tweets: tweet,
-      value: "",
-    });
+    if (this.state.message !== "") {
+      this.setState({
+        tweets: newTweet,
+        message: "",
+        name: "",
+      });
+    } else {
+      alert("pleas type infomation");
+    }
+
     // console.log(this.state.value);
-    // console.log(tweet);
     console.log(this.state.tweets);
+    console.log(this.state.message);
   }
   renderTweets() {
-    this.state.tweets.map((tweet, idx) => {
-      return <Tweet key={idx} content={tweet.content}></Tweet>;
+    return this.state.tweets.map((tweet, idx) => {
+      return <Tweet key={idx} content={tweet.content} name={tweet.name} />;
     });
   }
   render() {
     return (
-      <div id="root">
+      <div>
         <div>
-          <textarea value={this.state.value} onChange={this.handleChange} />
+          <input id="name"></input>
+          <textarea value={this.state.message} onChange={this.handleChange} />
           <button onClick={this.handleClick}>click</button>
         </div>
-        <div>{this.state.value}</div>
         <ul>{this.renderTweets()}</ul>
+        {/* <div>{this.state.message}</div> */}
       </div>
     );
   }
 }
 
-class Tweet extends React.Component {
-  render() {
-    return (
-      <li>
-        <div>{this.props.content}</div>
-      </li>
-    );
-  }
-}
 export default App;
