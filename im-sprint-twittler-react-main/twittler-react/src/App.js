@@ -22,10 +22,18 @@ class App extends React.Component {
 
   // }
   handleClick() {
+    let date = function (date) {
+      let year = date.getFullYear();
+      let month = date.getMonth();
+      let day = date.getDate();
+      day = day >= 10 ? day : "0" + day;
+      return year + "-" + month + "-" + day;
+    };
     let newTweet = this.state.tweets.concat({
       // uuid: this.state.currentNum,
-      name: document.querySelector("#name").value || "김아무개",
+      name: document.querySelector("#inputName").value || "김아무개",
       content: this.state.message,
+      date: date(new Date()),
     });
     if (this.state.message !== "") {
       this.setState({
@@ -33,6 +41,7 @@ class App extends React.Component {
         message: "",
         name: "",
       });
+      document.querySelector("#inputName").value = null;
     } else {
       alert("pleas type infomation");
     }
@@ -42,20 +51,25 @@ class App extends React.Component {
     console.log(this.state.message);
   }
   renderTweets() {
-    return this.state.tweets.map((tweet, idx) => {
-      return <Tweet key={idx} content={tweet.content} name={tweet.name} />;
+    return this.state.tweets.reverse().map((tweet, idx) => {
+      return <Tweet key={idx} content={tweet.content} name={tweet.name} date={tweet.date} />;
     });
   }
   render() {
     return (
-      <div>
-        <div>
-          <input id="name"></input>
-          <textarea value={this.state.message} onChange={this.handleChange} />
-          <button onClick={this.handleClick}>click</button>
+      <div id="App">
+        <div id="userBox">
+          <input autoComplete="off" id="inputName" placeholder="이름을 입려하세요"></input>
+          <input id="inputText" autoComplete="off" value={this.state.message} onChange={this.handleChange} placeholder="내용을 입력하세요" />
+
+          <button id="button" onClick={this.handleClick}>
+            click
+          </button>
         </div>
-        <ul>{this.renderTweets()}</ul>
-        {/* <div>{this.state.message}</div> */}
+        <div id="tweetBox">
+          <ul>{this.renderTweets()}</ul>
+          {/* <div>{this.state.message}</div> */}
+        </div>
       </div>
     );
   }
