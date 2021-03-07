@@ -18,8 +18,9 @@ app.use(logger("dev"));
 // TODO: 단계1. 적당한 cors 옵션을 작성해야 합니다. origin은 클라이언트(리액트) 서버의 주소이며 method 는 오로지 GET, POST, OPTION만 허용해야 합니다.
 app.use(
   cors({
-    origin: "https:localhost",
+    origin: "https://localhost:3000",
     methods: "GET, POST, OPTION",
+    credentials: true,
   })
 );
 app.use(cookieParser());
